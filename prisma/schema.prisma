@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  INACTIVE
+  ACTIVE
+}
+
+enum Role {
+  SUPER_ADMIN
+  SUPERVISOR_REGIONES
+  ENCARGADO_CASINO
+  ENCARGADO_RRHH
+}
+
+model Company {
+  id             String   @id @default(uuid())
+  companyName    String   @map("company_name")
+  companyStatus  Status   @default(ACTIVE) @map("company_status")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  offices Office[]
+  users   User[]
+
+  @@map("companies")
+}
+
+model Office {
+  id            String   @id @default(uuid())
+  companyId     String   @map("company_id")
+  officeName    String   @map("office_name")
+  officeStatus  Status   @default(ACTIVE) @map("office_status")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  company      Company      @relation(fields: [companyId], references: [id])
+  employees    Employee[]
+  userOffices  UserOffice[]
+
+  @@index([companyId])
+  @@map("offices")
+}
+
+model Employee {
+  id                 String   @id @default(uuid())
+  officeId           String   @map("office_id")
+  employeeCode       Int      @unique @map("employee_code")
+  employeeName       String   @map("employee_name")
+  employeeType       String   @map("employee_type")
+  /// Bono dominical (porcentaje o cantidad)
+  employeeSundayBonus Int      @map("employee_bonus_dom")
+  employeeStatus     Status   @default(ACTIVE) @map("employee_status")
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt          DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  office    Office      @relation(fields: [officeId], references: [id])
+  movements Movement[]
+
+  @@index([officeId])
+  @@map("employees")
+}
+
+model Incident {
+  id              String   @id @default(uuid())
+  incidentCode    String   @unique @map("incident_code")
+  incidentName    String   @map("incident_name")
+  incidentStatus  Status   @default(ACTIVE) @map("incident_status")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  movements Movement[]
+
+  @@map("incidents")
+}
+
+model Movement {
+  id                    String   @id @default(uuid())
+  periodId              String   @map("period_id")
+  employeeId            String   @map("employee_id")
+  incidentId            String   @map("incident_id")
+  incidenceDate         DateTime @map("incidence_date")
+  incidenceObservation  String   @map("incidence_observation")
+  incidenceStatus       Status   @default(ACTIVE) @map("incidence_status")
+  createdAt             DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt             DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  period   Period   @relation(fields: [periodId], references: [id])
+  employee Employee @relation(fields: [employeeId], references: [id])
+  incident Incident @relation(fields: [incidentId], references: [id])
+
+  @@index([periodId])
+  @@index([employeeId])
+  @@index([incidentId])
+  @@map("movements")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  companyId     String   @map("company_id")
+  userName      String   @map("user_name")
+  userEmail     String   @unique @map("user_email")
+  userPassword  String   @map("user_password")
+  userStatus    Status   @default(ACTIVE) @map("user_status")
+  userRol       Role     @default(ENCARGADO_CASINO) @map("user_rol")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  company      Company      @relation(fields: [companyId], references: [id])
+  userOffices  UserOffice[]
+
+  @@index([companyId])
+  @@map("users")
+}
+
+model Period {
+  id            String   @id @default(uuid())
+  periodName    String   @map("period_name")
+  periodStart   DateTime @map("period_start")
+  periodEnd     DateTime @map("period_end")
+  periodStatus  Status   @default(ACTIVE) @map("period_status")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  movements Movement[]
+
+  @@map("periods")
+}
+
+model UserOffice {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  officeId  String   @map("office_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  user   User   @relation(fields: [userId], references: [id])
+  office Office @relation(fields: [officeId], references: [id])
+
+  @@index([userId])
+  @@index([officeId])
+  @@map("user_offices")
+}
