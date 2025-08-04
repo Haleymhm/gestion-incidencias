@@ -1,8 +1,29 @@
 # Sistema de Gestión de Incidencias MX
 
-Un sistema moderno para la gestión de incidencias desarrollado con Next.js 15, Prisma, y shadcn/ui.
+Un sistema moderno para la gestión d## 📁 Estructura del Proyecto
 
-## 🚀 Características
+```bash
+src/
+├── app/                   # Directorio principal de la aplicación
+│   ├── (auth)/           # Rutas de autenticación
+│   │   ├── login/        # Página de inicio de sesión
+│   │   └── logout/       # Manejo de cierre de sesión
+│   ├── (dashboard)/      # Panel de control protegido
+│   │   ├── incidencias/  # Gestión de incidencias
+│   │   ├── empleados/    # Gestión de empleados
+│   │   └── reportes/     # Reportes y estadísticas
+│   ├── api/              # API Routes de Next.js
+│   │   ├── auth/        # Endpoints de autenticación
+│   │   └── v1/          # API versión 1
+│   └── layout.tsx       # Layout principal
+├── components/          # Componentes reutilizables
+│   ├── ui/             # Componentes de UI (shadcn)
+│   └── forms/          # Componentes de formularios
+├── lib/                # Utilidades y configuraciones
+├── prisma/             # Esquema y migraciones DB
+└── registry/           # Registro de componentes shadcnmpresariales desarrollado con Next.js 15, Prisma ORM, y shadcn/ui. Diseñado para manejar eficientemente el registro y seguimiento de incidencias laborales en múltiples empresas y oficinas.
+
+## 🚀 Características principales
 
 - **Autenticación segura** con JWT y cookies httpOnly
 - **Manejo de sesiones** propio (no NextAuth)
@@ -15,10 +36,12 @@ Un sistema moderno para la gestión de incidencias desarrollado con Next.js 15, 
 
 ## 📋 Prerrequisitos
 
-- Node.js 18+ 
-- MySQL
-- npm o yarn
-- (Opcional) Docker
+- Node.js 18+ o Bun 1.0+
+- MySQL 8.0+
+- npm, yarn, o bun
+- Git
+- (Opcional) Docker y Docker Compose
+- (Opcional) VS Code con las extensiones recomendadas
 
 ## 🛠️ Instalación
 
@@ -100,14 +123,31 @@ src/
 - **movements:** Registro de movimientos/incidencias por empleado.
 - **periods:** Periodos de tiempo para agrupar incidencias.
 
-## 🎨 Tecnologías Utilizadas
+## 🎨 Stack Tecnológico
 
-- **Frontend:** Next.js 15, React 19, TypeScript
-- **UI:** shadcn/ui, Tailwind CSS, Radix UI, Lucide React
-- **Backend:** Next.js API Routes
-- **Base de datos:** MySQL con Prisma ORM
-- **Autenticación:** JWT y cookies httpOnly, bcrypt para hash de contraseñas
-- **Formularios:** React Hook Form con Zod validation
+### Frontend
+- **Framework:** Next.js 15 con App Router
+- **Lenguaje:** TypeScript 5.2+
+- **UI Components:** shadcn/ui + Radix UI
+- **Estilos:** Tailwind CSS v3
+- **Iconos:** Lucide React
+- **Estado:** React Server Components + Server Actions
+- **Formularios:** React Hook Form + Zod
+
+### Backend
+- **Runtime:** Node.js 18+ / Bun 1.0+
+- **API:** Next.js Route Handlers
+- **Base de datos:** MySQL 8
+- **ORM:** Prisma
+- **Autenticación:** JWT + httpOnly cookies
+- **Seguridad:** bcrypt, CORS, rate limiting
+
+### DevOps
+- **CI/CD:** GitHub Actions
+- **Containerización:** Docker + Docker Compose
+- **Deployment:** Vercel / Self-hosted
+- **Monitoreo:** Sentry
+- **Análisis:** Vercel Analytics
 
 ## 🔐 Autenticación y Manejo de Sesión
 
@@ -126,24 +166,54 @@ src/
 - `npm run lint` - Verificar código
 - `npm run format` - Formatear código
 
-## 🔧 Desarrollo
+## 🔧 Desarrollo y Mantenimiento
 
-### Agregar nuevos componentes
+### Configuración del Entorno de Desarrollo
 
+1. Instalar extensiones recomendadas de VS Code:
+   - Prisma VS Code Extension
+   - ESLint
+   - Prettier
+   - Tailwind CSS IntelliSense
+
+2. Configurar husky para pre-commits:
+   ```bash
+   npm run prepare
+   ```
+
+### Comandos de Desarrollo Frecuentes
+
+#### Componentes UI
 ```bash
+# Agregar nuevo componente de shadcn/ui
 npx shadcn@latest add [component-name]
+
+# Actualizar componentes existentes
+npx shadcn@latest upgrade
 ```
 
-### Generar migraciones
-
+#### Base de Datos
 ```bash
+# Crear nueva migración
 npx prisma migrate dev --name [nombre-migracion]
+
+# Aplicar migraciones pendientes
+npx prisma migrate deploy
+
+# Actualizar cliente de Prisma
+npx prisma generate
+
+# Visualizar base de datos
+npx prisma studio
 ```
 
-### Actualizar cliente de Prisma
-
+#### Testing
 ```bash
-npx prisma generate
+# Ejecutar tests unitarios
+npm run test
+
+# Ejecutar tests e2e
+npm run test:e2e
 ```
 
 ## 📝 Notas
@@ -168,6 +238,5 @@ npx prisma generate
 Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
 
 ---
-<p align="center">
-  <img src="assets/logo-soaint-azul.png" alt="Logo del Proyecto">
-</p>
+
+![Logo del Proyecto](assets/logo-soaint-azul.png)
