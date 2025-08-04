@@ -22,11 +22,11 @@ const offices = [
 ];
 
 type RowData = {
-  periodo: string;
-  oficina: string;
-  nroIncidencias: number;
-  preAprobado: any;
-  aprobado: any;
+    periodo: string;
+    oficina: string;
+    nroIncidencias: number;
+    preAprobado: any;
+    aprobado: any;
 };
 
 const data: RowData[] = [
@@ -55,9 +55,9 @@ const data: RowData[] = [
 
 // Simulación de incidencias (en la práctica, esto vendría de la API)
 const allIncidencias = [
-  { id: 1, periodo: "Julio 2024", oficina: "CDMX", codigo: "INC001", nombre: "Falta injustificada", status: "Pendiente" },
-  { id: 2, periodo: "Julio 2024", oficina: "CDMX", codigo: "INC002", nombre: "Retardo", status: "Pendiente" },
-  { id: 3, periodo: "Julio 2024", oficina: "Guadalajara", codigo: "INC003", nombre: "Permiso sin goce", status: "Pendiente" },
+    { id: 1, periodo: "Julio 2024", oficina: "CDMX", codigo: "INC001", nombre: "Falta injustificada", status: "Pendiente" },
+    { id: 2, periodo: "Julio 2024", oficina: "CDMX", codigo: "INC002", nombre: "Retardo", status: "Pendiente" },
+    { id: 3, periodo: "Julio 2024", oficina: "Guadalajara", codigo: "INC003", nombre: "Permiso sin goce", status: "Pendiente" },
 ];
 
 // Simulación de rol de usuario actual
@@ -97,6 +97,7 @@ export default function ReviewPage() {
         );
         if (existe) {
             setError("Ya existe un registro con ese Periodo y Oficina.");
+
             return;
         }
         // Aquí iría la lógica para guardar la aprobación
@@ -351,7 +352,7 @@ export default function ReviewPage() {
                             </div>
                             <DialogFooter>
                                 <Button onClick={handleNotificar} variant="outline" disabled={notificarLoading}>
-                                    {notificarLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Notificar a Encargado Playcity
+                                    {notificarLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Cancelar
                                 </Button>
                                 <Button onClick={handlePreAprobar} disabled={preAprobarLoading}>
                                     {preAprobarLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Pre-Aprobar
@@ -396,7 +397,7 @@ export default function ReviewPage() {
                             </div>
                             <DialogFooter>
                                 <Button onClick={handleNotificarSup} variant="outline" disabled={notificarSupLoading}>
-                                    {notificarSupLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Notificar a Supervisor de Zona
+                                    {notificarSupLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Cancelar
                                 </Button>
                                 <Button onClick={handleAprobar} disabled={aprobarLoading}>
                                     {aprobarLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Aprobar

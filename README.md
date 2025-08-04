@@ -238,5 +238,3 @@ npm run test:e2e
 Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
 
 ---
-
-![Logo del Proyecto](assets/logo-soaint-azul.png)

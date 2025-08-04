@@ -1,8 +1,8 @@
 {
-    "name": "gestion-incidencias-ollamani",
+    "name": "gestion-incidencias",
     "version": "1.0.0",
     "private": false,
-    "website": "https://incidencias-mx.vercel.app/",
+    "website": "https://gestion-incidencias.vercel.app/",
     "license": "MIT",
     "scripts": {
         "dev": "next dev --turbopack",
