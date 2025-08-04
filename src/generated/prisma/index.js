@@ -215,7 +215,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/haleymhm/soaint/incidencias_mx/src/generated/prisma",
+      "value": "/home/haleymhm/Projects/gestion-incidencias/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -229,7 +229,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/haleymhm/soaint/incidencias_mx/prisma/schema.prisma",
+    "sourceFilePath": "/home/haleymhm/Projects/gestion-incidencias/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

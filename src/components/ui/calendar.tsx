@@ -7,13 +7,14 @@ import { buttonVariants } from '@/registry/new-york-v4/ui/button';
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
 
 function Calendar({ className, classNames, showOutsideDays = true, ...props }: React.ComponentProps<typeof DayPicker>) {
     return (
         <DayPicker
             showOutsideDays={showOutsideDays}
             className={cn('p-3', className)}
-            classNames={{
+            /* classNames={{
                 months: 'flex flex-col sm:flex-row gap-2',
                 month: 'flex flex-col gap-4',
                 caption: 'flex justify-center pt-1 relative items-center w-full',
@@ -25,10 +26,10 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: R
                 ),
                 nav_button_previous: 'absolute left-1',
                 nav_button_next: 'absolute right-1',
-                table: 'w-full border-collapse space-x-1',
-                head_row: 'flex',
-                head_cell: 'text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]',
-                row: 'flex w-full mt-2',
+                table: 'w-full border-collapse space-y-1',
+                head_row: 'grid grid-cols-7 w-full',
+                head_cell: 'text-center text-muted-foreground font-normal text-[0.8rem]',
+                row: 'grid grid-cols-7 w-full mt-2',
                 cell: cn(
                     'relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-range-end)]:rounded-r-md',
                     props.mode === 'range'
@@ -46,7 +47,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: R
                 day_range_middle: 'aria-selected:bg-accent aria-selected:text-accent-foreground',
                 day_hidden: 'invisible',
                 ...classNames
-            }}
+            }} */
             //   components={{
             //     IconLeft: ({ className, ...props }) => (
             //       <ChevronLeft className={cn("size-4", className)} {...props} />
