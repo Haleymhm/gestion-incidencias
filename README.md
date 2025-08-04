@@ -1,4 +1,4 @@
-# Sistema de Gestión de Incidencias MX
+# Sistema de Gestión de Incidencias
 
 Un sistema moderno para la gestión d## 📁 Estructura del Proyecto
 
