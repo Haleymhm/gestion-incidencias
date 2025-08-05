@@ -200,6 +200,15 @@ exports.Prisma.UserOfficeScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.HolidayScalarFieldEnum = {
+  id: 'id',
+  holidayName: 'holidayName',
+  holidayDate: 'holidayDate',
+  holidayStatus: 'holidayStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -229,7 +238,8 @@ exports.Prisma.ModelName = {
   Movement: 'Movement',
   User: 'User',
   Period: 'Period',
-  UserOffice: 'UserOffice'
+  UserOffice: 'UserOffice',
+  Holiday: 'Holiday'
 };
 
 /**

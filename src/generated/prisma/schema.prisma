@@ -136,6 +136,7 @@ model Period {
   updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
 
   movements Movement[]
+  //approvals Approval[]
 
   @@map("periods")
 }
@@ -153,4 +154,15 @@ model UserOffice {
   @@index([userId])
   @@index([officeId])
   @@map("user_offices")
+}
+
+model Holiday {
+  id            String   @id @default(uuid())
+  holidayName   String   @map("holiday_name")
+  holidayDate   DateTime @map("holiday_date")
+  holidayStatus Status   @default(ACTIVE) @map("holiday_status")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@map("holidays")
 }

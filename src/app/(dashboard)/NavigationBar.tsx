@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BellIcon, HouseIcon, PowerIcon, SettingsIcon, Building2Icon, UserIcon, CalendarIcon, UsersRound, FactoryIcon, AlertCircleIcon} from 'lucide-react';
+import { BellIcon, HouseIcon, PowerIcon, SettingsIcon, Building2Icon, UserIcon, CalendarIcon, UsersRound, FactoryIcon, AlertCircleIcon, GiftIcon} from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
@@ -129,6 +129,14 @@ const NavigationBar = () => {
                                             <Link href="/users" className="px-4 py-2 hover:bg-accent rounded flex-row items-center gap-2">
                                                 <UserIcon className="w-5 h-5" />
                                                 Usuarios
+                                            </Link>
+                                        </NavigationMenuLink>
+                                    )}
+                                    {canAccess(user?.userRol, 'menu', 'holidays') && (
+                                        <NavigationMenuLink asChild>
+                                            <Link href="/holidays" className="px-4 py-2 hover:bg-accent rounded flex-row items-center gap-2">
+                                                <GiftIcon className="w-5 h-5" />
+                                                Días Festivos
                                             </Link>
                                         </NavigationMenuLink>
                                     )}
