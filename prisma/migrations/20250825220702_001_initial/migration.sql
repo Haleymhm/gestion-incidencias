@@ -4,6 +4,9 @@ CREATE TYPE "Status" AS ENUM ('INACTIVE', 'ACTIVE');
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('SUPER_ADMIN', 'SUPERVISOR_REGIONES', 'ENCARGADO_CASINO', 'ENCARGADO_RRHH');
 
+-- CreateEnum
+CREATE TYPE "EmployeeType" AS ENUM ('SIND', 'CONF');
+
 -- CreateTable
 CREATE TABLE "companies" (
     "id" TEXT NOT NULL,
@@ -33,7 +36,7 @@ CREATE TABLE "employees" (
     "office_id" TEXT NOT NULL,
     "employee_code" INTEGER NOT NULL,
     "employee_name" TEXT NOT NULL,
-    "employee_type" TEXT NOT NULL,
+    "employee_type" "EmployeeType" NOT NULL,
     "employee_bonus_dom" INTEGER NOT NULL,
     "employee_status" "Status" NOT NULL DEFAULT 'ACTIVE',
     "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -61,6 +64,7 @@ CREATE TABLE "movements" (
     "employee_id" TEXT NOT NULL,
     "incident_id" TEXT NOT NULL,
     "incidence_date" TIMESTAMP(3) NOT NULL,
+    "return_date" TIMESTAMP(3),
     "incidence_observation" TEXT NOT NULL,
     "incidence_status" "Status" NOT NULL DEFAULT 'ACTIVE',
     "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -108,6 +112,31 @@ CREATE TABLE "user_offices" (
     CONSTRAINT "user_offices_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "holidays" (
+    "id" TEXT NOT NULL,
+    "holiday_name" TEXT NOT NULL,
+    "holiday_day" TEXT NOT NULL,
+    "holiday_month" TEXT NOT NULL,
+    "holiday_status" "Status" NOT NULL DEFAULT 'ACTIVE',
+    "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(6) NOT NULL,
+
+    CONSTRAINT "holidays_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "dayoffs" (
+    "id" TEXT NOT NULL,
+    "employee_id" TEXT NOT NULL,
+    "day_off" TIMESTAMP(3) NOT NULL,
+    "dayoff_status" "Status" NOT NULL DEFAULT 'ACTIVE',
+    "created_at" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(6) NOT NULL,
+
+    CONSTRAINT "dayoffs_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE INDEX "offices_company_id_idx" ON "offices"("company_id");
 
@@ -141,6 +170,9 @@ CREATE INDEX "user_offices_user_id_idx" ON "user_offices"("user_id");
 -- CreateIndex
 CREATE INDEX "user_offices_office_id_idx" ON "user_offices"("office_id");
 
+-- CreateIndex
+CREATE INDEX "dayoffs_employee_id_idx" ON "dayoffs"("employee_id");
+
 -- AddForeignKey
 ALTER TABLE "offices" ADD CONSTRAINT "offices_company_id_fkey" FOREIGN KEY ("company_id") REFERENCES "companies"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -164,3 +196,6 @@ ALTER TABLE "user_offices" ADD CONSTRAINT "user_offices_user_id_fkey" FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE "user_offices" ADD CONSTRAINT "user_offices_office_id_fkey" FOREIGN KEY ("office_id") REFERENCES "offices"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "dayoffs" ADD CONSTRAINT "dayoffs_employee_id_fkey" FOREIGN KEY ("employee_id") REFERENCES "employees"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

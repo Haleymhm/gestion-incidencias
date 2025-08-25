@@ -151,6 +151,52 @@ async function main() {
 
   console.log('✅ Incidencias creadas:', incidents.length);
 
+  // Crear algunos Dias Festivos de ejemplo
+  const holidays = await Promise.all([
+    prisma.holiday.create({
+      data: {
+        holidayName: 'Año Nuevo',
+        holidayDay: '01',
+        holidayMonth: '01', // January
+        holidayStatus: 'ACTIVE',
+      },
+    }),
+    prisma.holiday.create({
+      data: {
+        holidayName: 'Noche Buena',
+        holidayDay: '24',
+        holidayMonth: '12',
+        holidayStatus: 'ACTIVE',
+      },
+    }),
+    prisma.holiday.create({
+      data: {
+        holidayName: 'Navidad',
+        holidayDay: '25',
+        holidayMonth: '12',
+        holidayStatus: 'ACTIVE',
+      },
+    }),
+    prisma.holiday.create({
+      data: {
+        holidayName: 'Día de la Independencia Nacional',
+        holidayDay: '18',
+        holidayMonth: '09',
+        holidayStatus: 'ACTIVE',
+      },
+    }),
+    prisma.holiday.create({
+      data: {
+        holidayName: 'Día de las Glorias del Ejército',
+        holidayDay: '19',
+        holidayMonth: '09',
+        holidayStatus: 'ACTIVE',
+      },
+    }),
+  ]);
+
+  console.log('✅ Días Festivos creados:', holidays.length);
+
   console.log('🎉 Seed completado exitosamente!');
   console.log('\n📋 Credenciales para probar el login:');
   console.log(`   Email: ${user.userEmail}`);

@@ -3,6 +3,7 @@ type DashboardActions = 'incidencias' | 'datos' | 'reportes';
 type EmployeeActions = 'create' | 'edit' | 'delete' | 'btnForm' | 'filter';
 type IncidentActions = 'create' | 'edit' | 'delete' | 'btnForm' | 'filter';
 type MovementActions = 'create' | 'edit' | 'delete' | 'btnForm' | 'filterOffice';
+type HolidayActions = 'create' | 'edit' | 'delete' | 'btnForm' | 'filter';
 
 type RoleRules = {
   menu: Record<string, string[]>;
@@ -10,7 +11,7 @@ type RoleRules = {
   employees: Record<EmployeeActions, string[]>;
   incidents: Record<IncidentActions, string[]>;
   movement: Record<MovementActions, string[]>;
-  
+  holidays: Record<HolidayActions, string[]>;
 };
 
 export const roleRules: RoleRules = {
@@ -21,6 +22,7 @@ export const roleRules: RoleRules = {
     incidents: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
     employees: ['SUPER_ADMIN', 'ENCARGADO_RRHH', 'SUPERVISOR_REGIONES', 'ENCARGADO_CASINO'],
     users: ['SUPER_ADMIN'],
+    holidays: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
   },
   dashboard: {
     incidencias: ['SUPER_ADMIN', 'ENCARGADO_RRHH', 'SUPERVISOR_REGIONES', 'ENCARGADO_CASINO'],
@@ -49,12 +51,17 @@ export const roleRules: RoleRules = {
     edit: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
     delete: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
   },
-  
-
+  holidays: {
+    btnForm: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
+    filter: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
+    create: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
+    edit: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
+    delete: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
+  },
 };
 
 // Función reutilizable para validar acceso
-type ActionType = EmployeeActions | DashboardActions | string;
+type ActionType = EmployeeActions | DashboardActions | HolidayActions | string;
 
 export function canAccess(
   userRol: string | undefined,
