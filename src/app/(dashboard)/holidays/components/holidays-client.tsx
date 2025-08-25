@@ -6,9 +6,7 @@ import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
-import { DataTable } from "@/components/ui/data-table";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { DataTable } from "@/components/ui/data-table"; 
 import { toast } from "sonner";
 import { HolidayModal } from "./holiday-modal";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -17,13 +15,19 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 export interface Holiday {
     id: string;
     holidayName: string;
-    holidayDate: string;
-    holidayStatus: string;
+    holidayDay: string; 
+    holidayMonth: string;
+    holidayStatus: "ACTIVE" | "INACTIVE";
     createdAt: string;
     updatedAt: string;
 }
 
 const PAGE_SIZE = 10;
+
+const months = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+];
 
 export const HolidaysClient = () => {
     const [holidays, setHolidays] = useState<Holiday[]>([]);
@@ -123,9 +127,15 @@ export const HolidaysClient = () => {
             header: "Nombre del Día Festivo",
         },
         {
-            accessorKey: "holidayDate",
+            id: "date",
             header: "Fecha",
-            cell: ({ row }: any) => format(new Date(row.original.holidayDate), "d 'de' MMMM 'de' yyyy", { locale: es }),
+            cell: ({ row }: any) => {
+                const day = row.original.holidayDay;
+                const monthIndex = parseInt(row.original.holidayMonth, 10) - 1;
+                const monthName = months[monthIndex] || '';
+                
+                return `${day} de ${monthName}`;
+            },
         },
         {
             accessorKey: "holidayStatus",

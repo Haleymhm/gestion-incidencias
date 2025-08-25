@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
                 where,
                 skip: (page - 1) * pageSize,
                 take: pageSize,
-                orderBy: { holidayDate: 'asc' },
+                orderBy: [{ holidayMonth: 'asc' }, { holidayDay: 'asc' }],
             }),
             prisma.holiday.count({ where }),
         ]);
@@ -40,14 +40,15 @@ export async function GET(request: NextRequest) {
 // POST: Crear un nuevo día festivo
 export async function POST(request: NextRequest) {
     try {
-        const { holiday_name, holiday_date, holiday_status } = await request.json();
-        if (!holiday_name || !holiday_date || holiday_status === undefined) {
+        const { holiday_name, holiday_day, holiday_month, holiday_status } = await request.json();
+        if (!holiday_name || !holiday_day || !holiday_month || holiday_status === undefined) {
             return NextResponse.json({ message: 'Todos los campos son requeridos' }, { status: 400 });
         }
         const holiday = await prisma.holiday.create({
             data: {
                 holidayName: holiday_name,
-                holidayDate: new Date(holiday_date),
+                holidayDay: holiday_day,
+                holidayMonth: holiday_month,
                 holidayStatus: holiday_status,
             },
         });
@@ -61,15 +62,16 @@ export async function POST(request: NextRequest) {
 // PUT: Editar un día festivo (requiere id en el body)
 export async function PUT(request: NextRequest) {
     try {
-        const { id, holiday_name, holiday_date, holiday_status } = await request.json();
-        if (!id || !holiday_name || !holiday_date || holiday_status === undefined) {
+        const { id, holiday_name, holiday_day, holiday_month, holiday_status } = await request.json();
+        if (!id || !holiday_name || !holiday_day || !holiday_month || holiday_status === undefined) {
             return NextResponse.json({ message: 'Todos los campos son requeridos' }, { status: 400 });
         }
         const holiday = await prisma.holiday.update({
             where: { id },
             data: {
                 holidayName: holiday_name,
-                holidayDate: new Date(holiday_date),
+                holidayDay: holiday_day,
+                holidayMonth: holiday_month,
                 holidayStatus: holiday_status,
             },
         });

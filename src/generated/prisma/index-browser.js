@@ -164,6 +164,7 @@ exports.Prisma.MovementScalarFieldEnum = {
   employeeId: 'employeeId',
   incidentId: 'incidentId',
   incidenceDate: 'incidenceDate',
+  returnDate: 'returnDate',
   incidenceObservation: 'incidenceObservation',
   incidenceStatus: 'incidenceStatus',
   createdAt: 'createdAt',
@@ -203,8 +204,18 @@ exports.Prisma.UserOfficeScalarFieldEnum = {
 exports.Prisma.HolidayScalarFieldEnum = {
   id: 'id',
   holidayName: 'holidayName',
-  holidayDate: 'holidayDate',
+  holidayDay: 'holidayDay',
+  holidayMonth: 'holidayMonth',
   holidayStatus: 'holidayStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DayOffScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  dayOff: 'dayOff',
+  dayOffStatus: 'dayOffStatus',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -218,9 +229,19 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
 exports.Status = exports.$Enums.Status = {
   INACTIVE: 'INACTIVE',
   ACTIVE: 'ACTIVE'
+};
+
+exports.EmployeeType = exports.$Enums.EmployeeType = {
+  SIND: 'SIND',
+  CONF: 'CONF'
 };
 
 exports.Role = exports.$Enums.Role = {
@@ -239,7 +260,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   Period: 'Period',
   UserOffice: 'UserOffice',
-  Holiday: 'Holiday'
+  Holiday: 'Holiday',
+  DayOff: 'DayOff'
 };
 
 /**

@@ -26,6 +26,11 @@ enum Role {
   ENCARGADO_RRHH
 }
 
+enum EmployeeType {
+  SIND
+  CONF
+}
+
 model Company {
   id             String   @id @default(uuid())
   companyName    String   @map("company_name")
@@ -60,7 +65,7 @@ model Employee {
   officeId           String   @map("office_id")
   employeeCode       Int      @unique @map("employee_code")
   employeeName       String   @map("employee_name")
-  employeeType       String   @map("employee_type")
+  employeeType       EmployeeType   @map("employee_type")
   /// Bono dominical (porcentaje o cantidad)
   employeeSundayBonus Int      @map("employee_bonus_dom")
   employeeStatus     Status   @default(ACTIVE) @map("employee_status")
@@ -69,6 +74,7 @@ model Employee {
 
   office    Office      @relation(fields: [officeId], references: [id])
   movements Movement[]
+  daysOff   DayOff[]
 
   @@index([officeId])
   @@map("employees")
@@ -93,6 +99,7 @@ model Movement {
   employeeId            String   @map("employee_id")
   incidentId            String   @map("incident_id")
   incidenceDate         DateTime @map("incidence_date")
+  returnDate            DateTime? @map("return_date")
   incidenceObservation  String   @map("incidence_observation")
   incidenceStatus       Status   @default(ACTIVE) @map("incidence_status")
   createdAt             DateTime @default(now()) @map("created_at") @db.Timestamp(6)
@@ -159,7 +166,8 @@ model UserOffice {
 model Holiday {
   id        String   @id @default(uuid())
   holidayName String   @map("holiday_name")
-  holidayDate DateTime @map("holiday_date")
+  holidayDay String      @map("holiday_day")
+  holidayMonth String   @map("holiday_month")
   holidayStatus Status   @default(ACTIVE) @map("holiday_status")
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
@@ -167,3 +175,18 @@ model Holiday {
   @@map("holidays")
 }
 
+model DayOff {
+  id        String   @id @default(uuid())
+  employeeId   String   @map("employee_id") // Usamos el ID del empleado para la relación
+  dayOff   DateTime @map("day_off")
+  dayOffStatus Status   @default(ACTIVE) @map("dayoff_status")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  // Se define la relación: Un DayOff pertenece a un Employee
+  employee  Employee @relation(fields: [employeeId], references: [id])
+
+  // Se crea un índice en la llave foránea para optimizar las búsquedas
+  @@index([employeeId])
+  @@map("dayoffs")
+}

@@ -5,8 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
 import {
     Dialog,
     DialogContent,
@@ -24,18 +22,36 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-import { Holiday } from "./holidays-client";
 
 const formSchema = z.object({
     holidayName: z.string().min(1, "El nombre del día festivo es requerido."),
-    holidayDate: z.date({ required_error: "La fecha es requerida." }),
+    holidayDay: z.string()
+        .min(1, "El día es requerido.")
+        .refine((val) => !isNaN(parseInt(val, 10)) && parseInt(val, 10) >= 1 && parseInt(val, 10) <= 31, {
+            message: "Día inválido (1-31).",
+        }),
+    holidayMonth: z.string()
+        .min(1, "El mes es requerido.")
+        .refine((val) => !isNaN(parseInt(val, 10)) && parseInt(val, 10) >= 1 && parseInt(val, 10) <= 12, {
+            message: "Mes inválido (1-12).",
+        }),
     holidayStatus: z.enum(["ACTIVE", "INACTIVE"], { required_error: "El estado es requerido." }),
 });
+
+const months = [
+    { value: '1', label: 'Enero' },
+    { value: '2', label: 'Febrero' },
+    { value: '3', label: 'Marzo' },
+    { value: '4', label: 'Abril' },
+    { value: '5', label: 'Mayo' },
+    { value: '6', label: 'Junio' },
+    { value: '7', label: 'Julio' },
+    { value: '8', label: 'Agosto' },
+    { value: '9', label: 'Septiembre' },
+    { value: '10', label: 'Octubre' },
+    { value: '11', label: 'Noviembre' },
+    { value: '12', label: 'Diciembre' },
+];
 
 type HolidayFormValues = z.infer<typeof formSchema>;
 
@@ -43,7 +59,13 @@ interface HolidayModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
-    initialData: Holiday | null;
+    initialData: {
+        id: string;
+        holidayName: string;
+        holidayDay: string;
+        holidayMonth: string;
+        holidayStatus: "ACTIVE" | "INACTIVE";
+    } | null;
 }
 
 export const HolidayModal: React.FC<HolidayModalProps> = ({
@@ -64,13 +86,15 @@ export const HolidayModal: React.FC<HolidayModalProps> = ({
         if (initialData) {
             form.reset({
                 holidayName: initialData.holidayName,
-                holidayDate: new Date(initialData.holidayDate),
-                holidayStatus: initialData.holidayStatus as "ACTIVE" | "INACTIVE",
+                holidayDay: initialData.holidayDay,
+                holidayMonth: initialData.holidayMonth,
+                holidayStatus: initialData.holidayStatus,
             });
         } else {
             form.reset({
                 holidayName: '',
-                holidayDate: new Date(),
+                holidayDay: '',
+                holidayMonth: '',
                 holidayStatus: 'ACTIVE',
             });
         }
@@ -81,7 +105,8 @@ export const HolidayModal: React.FC<HolidayModalProps> = ({
         try {
             const body = {
                 holiday_name: values.holidayName,
-                holiday_date: values.holidayDate,
+                holiday_day: String(values.holidayDay).padStart(2, '0'),
+                holiday_month: String(values.holidayMonth).padStart(2, '0'),
                 holiday_status: values.holidayStatus,
             };
             const url = initialData ? `/api/holidays` : '/api/holidays';
@@ -131,54 +156,56 @@ export const HolidayModal: React.FC<HolidayModalProps> = ({
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="holidayDate"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Fecha</FormLabel>
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <FormControl>
-                                                <Button
-                                                    variant="outline"
-                                                    className={cn(
-                                                        "w-full pl-3 text-left font-normal",
-                                                        !field.value && "text-muted-foreground"
-                                                    )}
-                                                    disabled={loading}
-                                                >
-                                                    {field.value ? format(field.value, "d 'de' MMMM 'de' yyyy", { locale: es }) : <span>Selecciona una fecha</span>}
-                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                                </Button>
-                                            </FormControl>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                            <Calendar
-                                                mode="single"
-                                                selected={field.value}
-                                                onSelect={field.onChange}
-                                                disabled={loading}
-                                                initialFocus
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        <div className="grid grid-cols-2 gap-4">
+                            <FormField
+                                control={form.control}
+                                name="holidayDay"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Día</FormLabel>
+                                        <FormControl>
+                                            <select {...field} disabled={loading} className="w-full h-9 border rounded-md px-2 bg-background">
+                                                <option value="">Selecciona un día</option>
+                                                {Array.from({ length: 31 }, (_, i) => i + 1).map(day => (
+                                                    <option key={day} value={String(day)}>
+                                                        {day}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )} />
+                            <FormField
+                                control={form.control}
+                                name="holidayMonth" 
+                                render={({ field }) => ( 
+                                    <FormItem>
+                                        <FormLabel>Mes</FormLabel>
+                                        <FormControl>
+                                            <select {...field} disabled={loading} className="w-full h-9 border rounded-md px-2 bg-background">
+                                                <option value="">Selecciona un mes</option>
+                                                {months.map(month => (
+                                                    <option key={month.value} value={month.value}>
+                                                        {month.label}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )} />
+                        </div>
                         <FormField
                             control={form.control}
                             name="holidayStatus"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Estado</FormLabel>
-                                    <FormControl>
-                                        <select {...field} disabled={loading} className="w-full border rounded px-2 py-2">
+                                    <FormLabel>Estado</FormLabel> 
+                                    <select {...field} disabled={loading} className="w-full h-9 border rounded-md px-2 bg-background">
                                             <option value="ACTIVE">Activo</option>
                                             <option value="INACTIVE">Inactivo</option>
                                         </select>
-                                    </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
