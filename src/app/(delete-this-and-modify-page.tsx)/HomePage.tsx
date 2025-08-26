@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import ExtensionDetails from '@/app/(delete-this-and-modify-page.tsx)/ExtensionDetails';
-import SetupDetails from '@/app/(delete-this-and-modify-page.tsx)/SetupDetails';
+
 
 const HomePage: React.FC = () => {
     return (
@@ -82,7 +82,7 @@ const HomePage: React.FC = () => {
             </div>
             <div className='space-y-6'>
                 <h2 className='text-center text-lg'>Whats included?</h2>
-                <SetupDetails />
+                
             </div>
             <div className='space-y-6'>
                 <h2 className='text-center text-lg'>VS Code Extensions</h2>

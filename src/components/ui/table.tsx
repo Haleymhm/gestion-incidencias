@@ -6,14 +6,14 @@ import { cn } from '@/lib/utils';
 
 function Table({ className, ...props }: React.ComponentProps<'table'>) {
     return (
-        <div className='relative w-full overflow-auto'>
+        <div className='relative w-full overflow-auto bg-white'>
             <table data-slot='table' className={cn('w-full caption-bottom text-sm', className)} {...props} />
         </div>
     );
 }
 
 function TableHeader({ className, ...props }: React.ComponentProps<'thead'>) {
-    return <thead data-slot='table-header' className={cn('[&_tr]:border-b', className)} {...props} />;
+    return <thead data-slot='table-header' className={cn('[&_tr]:border-b  hover:bg-blue-950 bg-blue-800', className)} {...props} />;
 }
 
 function TableBody({ className, ...props }: React.ComponentProps<'tbody'>) {
@@ -45,7 +45,7 @@ function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
         <th
             data-slot='table-head'
             className={cn(
-                'text-muted-foreground h-10 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+                'h-10 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-white',
                 className
             )}
             {...props}

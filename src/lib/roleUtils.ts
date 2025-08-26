@@ -1,5 +1,5 @@
 // Reglas centralizadas de acceso por rol
-type DashboardActions = 'incidencias' | 'datos' | 'reportes';
+type DashboardActions = 'dayoff'| 'incidencias' | 'datos' | 'reportes';
 type EmployeeActions = 'create' | 'edit' | 'delete' | 'btnForm' | 'filter';
 type IncidentActions = 'create' | 'edit' | 'delete' | 'btnForm' | 'filter';
 type MovementActions = 'create' | 'edit' | 'delete' | 'btnForm' | 'filterOffice';
@@ -25,6 +25,7 @@ export const roleRules: RoleRules = {
     holidays: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
   },
   dashboard: {
+    dayoff: ['SUPER_ADMIN', 'ENCARGADO_RRHH', 'SUPERVISOR_REGIONES', 'ENCARGADO_CASINO'],
     incidencias: ['SUPER_ADMIN', 'ENCARGADO_RRHH', 'SUPERVISOR_REGIONES', 'ENCARGADO_CASINO'],
     datos: ['SUPER_ADMIN', 'ENCARGADO_RRHH'],
     reportes: ['SUPER_ADMIN', 'SUPERVISOR_REGIONES', 'ENCARGADO_RRHH'],

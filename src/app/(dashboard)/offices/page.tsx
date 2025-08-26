@@ -7,8 +7,8 @@ import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 
-//import { Button } from '@/registry/new-york-v4/ui/button';
-import { Input } from '@/registry/new-york-v4/ui/input';
+//import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -16,14 +16,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/registry/new-york-v4/ui/table';
+} from '@/components/ui/table';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/new-york-v4/ui/dialog';
+} from '@/components/ui/dialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -33,16 +33,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/registry/new-york-v4/ui/alert-dialog';
-import { Badge } from '@/registry/new-york-v4/ui/badge';
-import { Label } from '@/registry/new-york-v4/ui/label';
+} from '@/components/ui/alert-dialog';
+import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/registry/new-york-v4/ui/select';
+} from '@/components/ui/select';
 
 interface Office {
   id: string;
@@ -234,9 +234,9 @@ export default function OfficesPage() {
   return (
     <div className="p-4 md:p-8 space-y-4">
       <div className="flex items-center">
-        <h2 className="text-3xl font-bold">Oficinas</h2>
+        <h2 className="text-3xl font-bold text-blue-800">Oficinas</h2>
         <div className="ml-auto flex items-center gap-2">
-          <Input placeholder="Buscar oficina..." value={search} onChange={handleSearch} className="w-64" />
+          <Input placeholder="Buscar oficina..." value={search} onChange={handleSearch} className="w-64 bg-white" />
           <Button onClick={openCreate}>
             <Plus className="mr-2 h-4 w-4" /> Nueva Oficina
           </Button>
@@ -244,13 +244,13 @@ export default function OfficesPage() {
       </div>
       <div className="border rounded-lg">
         <Table>
-          <TableHeader>
-            <TableRow className='bg-blue-950 text-white hover:bg-blue-800'>
+          <TableHeader >
+            <TableRow  className=' bg-blue-800 text-white hover:bg-blue-900'>
               
-              <TableHead className='text-white'>Nombre</TableHead>
-              <TableHead className='text-white'>Empresa</TableHead>
-              <TableHead className="w-32 text-white">Status</TableHead>
-              <TableHead className="w-32 text-white text-right">Acciones</TableHead>
+              <TableHead >Nombre</TableHead>
+              <TableHead >Empresa</TableHead>
+              <TableHead className='w-32'>Status</TableHead>
+              <TableHead className='w-32 text-right'>Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
