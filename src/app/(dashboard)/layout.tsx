@@ -13,12 +13,12 @@ const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     };
 
     return (
-        <div className="flex h-screen flex-col">
-            <NavigationBar onToggleSidebar={toggleSidebar} />
-            <div className="flex flex-1 overflow-hidden">
-                <Sidebar isOpen={isSidebarOpen} />
-                <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
-                    {children}
+        <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+            <Sidebar isOpen={isSidebarOpen} />
+            <div className="flex flex-1 flex-col overflow-hidden">
+                <NavigationBar onToggleSidebar={toggleSidebar} />
+                <main className="flex-1 overflow-y-auto">
+                    <div className="p-6">{children}</div>
                 </main>
             </div>
         </div>

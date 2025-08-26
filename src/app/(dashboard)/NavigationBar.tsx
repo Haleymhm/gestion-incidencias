@@ -45,9 +45,6 @@ const NavigationBar = ({ onToggleSidebar }: { onToggleSidebar: () => void }) => 
     return (
         <header className="w-full flex items-center justify-between px-6 py-4 bg-white shadow-sm z-10">
             <div className="flex items-center gap-4">
-                <Link href="/dashboard" className="flex items-center">
-                    <Image src="/images/ollamani-logo.png" alt="Ollamani Grupo" width={177} height={60} />
-                </Link>
                 <button onClick={onToggleSidebar} className="text-gray-500 hover:text-gray-700">
                     <MenuIcon className="w-6 h-6" />
                 </button>
