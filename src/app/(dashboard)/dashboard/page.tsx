@@ -93,7 +93,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#fbfafe]">
       {/* Header */}
-      <main className="mx-auto py-8">
+      <main className="flex-1 bg-gray-50 dark:bg-gray-900">
 
         {/* Novedades */}
         <section className="mb-8 px-8">
