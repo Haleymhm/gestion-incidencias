@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { toast } from "sonner";
 import { MovementModal } from "./movement-modal";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/registry/new-york-v4/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { canAccess, roleRules } from '@/lib/roleUtils';
 
 // Definir un tipo para la respuesta de la API mejora la seguridad de tipos y el autocompletado.

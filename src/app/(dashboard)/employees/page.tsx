@@ -12,14 +12,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/registry/new-york-v4/ui/table';
+} from '@/components/ui/table';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/new-york-v4/ui/dialog';
+} from '@/components/ui/dialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,16 +29,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/registry/new-york-v4/ui/alert-dialog';
-import { Badge } from '@/registry/new-york-v4/ui/badge';
-import { Label } from '@/registry/new-york-v4/ui/label';
+} from '@/components/ui/alert-dialog';
+import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/registry/new-york-v4/ui/select';
+} from '@/components/ui/select';
 import { ca } from 'date-fns/locale';
 import { canAccess, roleRules } from '@/lib/roleUtils';
 

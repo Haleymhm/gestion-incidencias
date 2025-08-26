@@ -205,19 +205,19 @@ export default function IncidentsPage() {
   return (
     <div className="p-4 md:p-8 space-y-4">
       <div className="flex items-center">
-        <h2 className="text-3xl font-bold">Incidencias</h2>
+        <h2 className="text-3xl font-bold text-blue-800">Incidencias</h2>
         <div className="ml-auto flex items-center gap-2">
-          <Input placeholder="Buscar incidencia..." value={search} onChange={handleSearch} className="w-64" />
+          <Input placeholder="Buscar incidencia..." value={search} onChange={handleSearch} className="w-64 bg-white" />
           <Button onClick={openCreate}><Plus className="mr-2 h-4 w-4" /> Nueva Incidencia</Button>
         </div>
       </div>
       <div className="border rounded-lg">
         <Table>
           <TableHeader>
-            <TableRow className='bg-blue-950 text-white hover:bg-blue-800'>
-              <TableHead className="text-white w-32">Código</TableHead>
-              <TableHead className='text-white'>Nombre</TableHead>
-              <TableHead className="text-white w-32">Status</TableHead>
+            <TableRow >
+              <TableHead className='w-32'>Código</TableHead>
+              <TableHead >Nombre</TableHead>
+              <TableHead className=" w-32">Status</TableHead>
               <TableHead className="text-white w-32 text-right">Acciones</TableHead>
             </TableRow>
           </TableHeader>

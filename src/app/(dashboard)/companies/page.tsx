@@ -3,11 +3,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
 
-//import { Button } from '@/registry/new-york-v4/ui/button';
+//import { Button } from '@/components/ui/button';
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Input } from '@/registry/new-york-v4/ui/input';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -15,14 +15,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/registry/new-york-v4/ui/table';
+} from '@/components/ui/table';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/new-york-v4/ui/dialog';
+} from '@/components/ui/dialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,16 +32,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/registry/new-york-v4/ui/alert-dialog';
-import { Badge } from '@/registry/new-york-v4/ui/badge';
-import { Label } from '@/registry/new-york-v4/ui/label';
+} from '@/components/ui/alert-dialog';
+import { Badge } from '@/components/ui/badge';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/registry/new-york-v4/ui/select';
+} from '@/components/ui/select';
 
 interface Company {
   id: string;
@@ -203,10 +203,10 @@ export default function CompaniesPage() {
         </div>
       </div>
       <Separator />
-      <div className="border rounded-lg">
-        <Table>
+      <div className="border rounded-lg bg-white">
+        <Table className='bg-white'>
           <TableHeader>
-            <TableRow className='bg-blue-950 text-white hover:bg-blue-800'>
+            <TableRow className='bg-blue-800 text-white hover:bg-blue-900'>
               <TableHead className="text-white">Nombre</TableHead>
               <TableHead className="w-32 text-white">Status</TableHead>
               <TableHead className="text-white w-32 text-right">Acciones</TableHead>
@@ -214,12 +214,12 @@ export default function CompaniesPage() {
           </TableHeader>
           <TableBody>
             {loading ? (
-              <TableRow><TableCell colSpan={3} className="text-center h-24">Cargando...</TableCell></TableRow>
+              <TableRow><TableCell colSpan={3} className="text-center h-24 bg-white">Cargando...</TableCell></TableRow>
             ) : companies.length === 0 ? (
-              <TableRow><TableCell colSpan={3} className="text-center h-24">No se encontraron compañías.</TableCell></TableRow>
+              <TableRow><TableCell colSpan={3} className="text-center h-24 bg-white">No se encontraron compañías.</TableCell></TableRow>
             ) : (
               companies.map((company) => (
-                <TableRow key={company.id}>
+                <TableRow key={company.id} className='hover:bg-blue-50 bg-white'>
                   <TableCell className="font-medium">{company.companyName}</TableCell>
                   <TableCell>
                     <Badge variant={company.companyStatus === 'ACTIVE' ? 'default' : 'destructive'}>

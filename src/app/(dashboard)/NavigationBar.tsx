@@ -1,11 +1,11 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BellIcon, HouseIcon, PowerIcon, CalendarIcon } from 'lucide-react';
+import { BellIcon, HouseIcon, PowerIcon, CalendarIcon, MenuIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-const NavigationBar = () => {
+const NavigationBar = ({ onToggleSidebar }: { onToggleSidebar: () => void }) => {
     const [user, setUser] = useState<any>(null);
     const [currentPeriod, setCurrentPeriod] = useState<any>(null); // Nuevo estado
     const router = useRouter();
@@ -43,11 +43,14 @@ const NavigationBar = () => {
     };
 
     return (
-        <header className="w-full flex items-center justify-between px-6 py-4 bg-white shadow-sm">
-            <div className="flex items-left gap-6">
+        <header className="w-full flex items-center justify-between px-6 py-4 bg-white shadow-sm z-10">
+            <div className="flex items-center gap-4">
                 <Link href="/dashboard" className="flex items-center">
                     <Image src="/images/ollamani-logo.png" alt="Ollamani Grupo" width={177} height={60} />
                 </Link>
+                <button onClick={onToggleSidebar} className="text-gray-500 hover:text-gray-700">
+                    <MenuIcon className="w-6 h-6" />
+                </button>
                 <span className="text-lg text-[#0047BA] font-medium py-4 px-3">
                     <span className="font-bold text-[#0047BA]">Gestión de Cultura y Desarrollo</span>
                     <span className="text-gray-400">  |  </span>

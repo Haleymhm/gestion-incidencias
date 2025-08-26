@@ -1,21 +1,22 @@
 
 'use client';
 import Link from 'next/link';
+import { Separator } from "@/components/ui/separator";
 import {
-    Building2Icon,
-    UserIcon,
-    CalendarIcon,
-    UsersRound,
-    FactoryIcon,
-    AlertCircleIcon,
-    GiftIcon
+    Building2Icon, UserIcon, CalendarIcon, UsersRound,
+    FactoryIcon, AlertCircleIcon, GiftIcon, WalletCardsIcon,
+    ChartNoAxesCombined, FileSearchIcon, TentTree,
+    Coffee, CalendarSync
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { canAccess } from '@/lib/roleUtils';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen }: { isOpen: boolean }) => {
+    const copyrigth = process.env.NEXT_PUBLIC_APP_COPYRIGTH;
+    const company = process.env.NEXT_PUBLIC_APP_COMPANY;
+    const version = process.env.NEXT_PUBLIC_APP_VERSION;
     const pathname = usePathname();
     const [user, setUser] = useState<any>(null);
 
@@ -42,18 +43,30 @@ const Sidebar = () => {
         { href: '/holidays', label: 'Días Festivos', icon: GiftIcon, rule: 'holidays' },
     ];
 
+    const navMain = [
+        { href: '/dayoff', label: 'Dia de Descanso', icon: Coffee, rule: 'dayoff' },
+        { href: '/movimientos', label: 'Incidencias', icon: ChartNoAxesCombined, rule: 'incidencias' },
+        { href: '/review', label: 'Revisión', icon: FileSearchIcon, rule: 'datos' },
+        { href: '/generate-disk', label: 'Generar cvs', icon: CalendarIcon, rule: 'reportes' },
+    ];
+
     return (
-        <aside className="w-64 flex-shrink-0 bg-white text-black p-4 flex flex-col shadow-sm">
+        <aside className={cn(
+            "bg-white text-black flex flex-col shadow-sm transition-all duration-300 ease-in-out overflow-hidden",
+            isOpen ? "w-64 p-4" : "w-0 p-0"
+        )}>
             <nav className="flex flex-col space-y-2">
+                <label className='pt-5 text-blue-800 font-bold'> MANTENIMIENTO</label>
                 {navLinks.map((link) => {
                     if (canAccess(user?.userRol, 'menu', link.rule)) {
                         const isActive = pathname.startsWith(link.href);
+
                         return (
                             <Link
                                 key={link.href}
                                 href={link.href}
                                 className={cn(
-                                    "flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-black hover:bg-gray-100",
+                                    "flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-black hover:bg-gray-100 flex-nowrap whitespace-nowrap",
                                     isActive && "bg-gray-100 text-black"
                                 )}
                             >
@@ -62,9 +75,38 @@ const Sidebar = () => {
                             </Link>
                         );
                     }
+
+                    return null;
+                })}
+
+                <Separator />
+                <label className='pt-5 text-blue-800 font-bold'> INCIDNCIAS</label>
+                {navMain.map((link) => {
+                    if (canAccess(user?.userRol, 'dashboard', link.rule)) {
+                        const isActive = pathname.startsWith(link.href);
+
+                        return (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={cn(
+                                    "flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-black hover:bg-gray-100 flex-nowrap whitespace-nowrap",
+                                    isActive && "bg-gray-100 text-black"
+                                )}
+                            >
+                                <link.icon className="h-4 w-4 text-[#f39200]" />
+                                {link.label}
+                            </Link>
+                        );
+                    }
+
                     return null;
                 })}
             </nav>
+            <span className="mt-auto text-xs text-gray-400 text-center py-4">
+                &copy; {copyrigth} {new Date().getFullYear()} <br />
+                {version}
+            </span>
         </aside>
     );
 };
