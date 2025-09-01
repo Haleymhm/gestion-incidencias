@@ -8,13 +8,14 @@ erDiagram
   users }o--o| user_offices : "assigned to"
   offices }o--o| user_offices : "has"
   employees ||--o{ movements : "registers"
+  employees ||--o{ dayoffs : "has"
   incidents ||--o{ movements : "has"
   periods ||--o{ movements : "has"
 
   companies {
     id string
     company_name string
-    company_status enum
+    company_status Status
     created_at datetime
     updated_at datetime
   }
@@ -22,7 +23,7 @@ erDiagram
     id string
     company_id string
     office_name string
-    office_status enum
+    office_status Status
     created_at datetime
     updated_at datetime
   }
@@ -31,9 +32,9 @@ erDiagram
     office_id string
     employee_code int
     employee_name string
-    employee_type string
+    employee_type EmployeeType
     employee_bonus_dom int
-    employee_status enum
+    employee_status Status
     created_at datetime
     updated_at datetime
   }
@@ -41,7 +42,7 @@ erDiagram
     id string
     incident_code string
     incident_name string
-    incident_status enum
+    incident_status Status
     created_at datetime
     updated_at datetime
   }
@@ -50,7 +51,7 @@ erDiagram
     period_name string
     period_start datetime
     period_end datetime
-    period_status enum
+    period_status Status
     created_at datetime
     updated_at datetime
   }
@@ -60,8 +61,10 @@ erDiagram
     employee_id string
     incident_id string
     incidence_date datetime
+    return_date datetime
     incidence_observation string
-    incidence_status enum
+    incidence_status Status
+    approval_status ApprovalStatus
     created_at datetime
     updated_at datetime
   }
@@ -71,8 +74,8 @@ erDiagram
     user_name string
     user_email string
     user_password string
-    user_status enum
-    user_rol enum
+    user_status Status
+    user_rol Role
     created_at datetime
     updated_at datetime
   }
@@ -80,6 +83,23 @@ erDiagram
     id string
     user_id string
     office_id string
+    created_at datetime
+    updated_at datetime
+  }
+  holidays {
+    id string
+    holiday_name string
+    holiday_day string
+    holiday_month string
+    holiday_status Status
+    created_at datetime
+    updated_at datetime
+  }
+  dayoffs {
+    id string
+    employee_id string
+    day_off datetime
+    dayoff_status Status
     created_at datetime
     updated_at datetime
   }
